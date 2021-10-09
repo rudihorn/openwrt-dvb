@@ -41,7 +41,7 @@ define Package/generic-it9135
   CATEGORY := DVB devices
   SUBMENU := Terrestrial (DVB-T/T2)
   TITLE := ITE 9135 based
-  DEPENDS := +it9135-firmware +kmod-dvb-af9033 +kmod-dvb-usb-af9035 +kmod-media-tuner-it913x
+  DEPENDS := +kmod-dvb-af9033 +kmod-dvb-usb-af9035 +kmod-media-tuner-it913x
 endef
 
 define Package/generic-it9135/description

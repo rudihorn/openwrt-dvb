@@ -30,7 +30,7 @@ MAKE_VARS += \
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-
+	$(call Kernel/Prepare/Default)
 	(if [ -s $(DL_DIR)/$(V4L_SOURCE_FILE) ]; \
 		then $(CP) $(DL_DIR)/$(V4L_SOURCE_FILE) $(PKG_BUILD_DIR)/linux/linux-media.tar.bz2; \
 	else if [ -d $(DL_DIR)/$(V4L_REPO_NAME) ]; \
@@ -46,9 +46,9 @@ define Build/Prepare
 	$(CP) ./files/* $(PKG_BUILD_DIR)/
 endef
 
-define Build/Configure
-	$(call Build/Compile/Default,allyesconfig)
-endef
+#define Build/Configure
+#	$(call Build/Compile/Default,allyesconfig)
+#endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/v4l-dvb
@@ -57,6 +57,18 @@ endef
 
 define Build/Install
 	touch $(PKG_BUILD_DIR)/.built
+endef
+
+define Build/Compile
+	echo "start" > /home/administrator/build.txt
+	+$(MAKE_VARS) $(MAKE) -C "$(PKG_BUILD_DIR)/v4l"
+	sleep 5
+	$(MAKE) $(PKG_JOBS) -C "$(LINUX_DIR)" \
+		$(KERNEL_MAKE_FLAGS) \
+		M="$(PKG_BUILD_DIR)" \
+		EXTRA_CFLAGS="$(BUILDFLAGS)" \
+		modules
+	echo "done" > /home/administrator/build.txt
 endef
 
 DVB_MENU := DVB Drivers

@@ -588,7 +588,7 @@ $(eval $(call KernelPackage,dvb-rtl2830))
 define KernelPackage/dvb-rtl2832
   TITLE := Realtek RTL2832
   $(call DvbFrontend,rtl2832,CONFIG_DVB_RTL2832)
-  DEPENDS += +kmod-dvb-core +kmod-i2c-mux
+  DEPENDS += +kmod-dvb-core +kmod-i2c-mux +kmod-regmap-i2c
 endef
 $(eval $(call KernelPackage,dvb-rtl2832))
 
